@@ -1,6 +1,8 @@
 from pyrogram import Client, filters
 from openai import OpenAI
 from dotenv import load_dotenv
+from flask import Flask
+import threading
 import os
 import json
 import time
@@ -195,6 +197,21 @@ def handle_query(client, message):
         answer = choices.message.content.strip()
         print(f"Bot response: {answer}")
         message.reply_text(answer)
+print("Starting the bot with web server support...")
+
+# Flask dummy server to keep Render alive
+server = Flask(__name__)
+
+@server.route('/')
+def home():
+    return "✅ ArabicTraderFXBot is running on Render!"
+
+def run_web():
+    server.run(host="0.0.0.0", port=10000)
+
+# Run Flask in a separate thread
+threading.Thread(target=run_web).start()
+
 
 # Run the bot
 print("Running the bot")
