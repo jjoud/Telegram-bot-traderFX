@@ -3,4 +3,5 @@ Pyrogram==2.0.106
 python-dotenv==1.1.1
 TgCrypto==1.2.5
 gunicorn 
-
+tqdm==4.67.1
+flask
